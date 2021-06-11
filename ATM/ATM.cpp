@@ -2,19 +2,145 @@
 //
 
 #include <iostream>
+#include<string>
+std::string name;
+//int option;
+int balance = 100;
+
+//declare function
+void getName();
+int displayMenu();
+int displaySecondaryMenu();
+int loopOptions(int option);
+void deposit();
+void withdraw();
+void checkBalance();
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    //request name
+	getName();
+	//display main menu
+	int choice= displayMenu();
+	//perform specific task
+	loopOptions(choice);
+	
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void getName() {
+	std::cout << "Name: ";
+	std::cin >> name;
+	std::cout << "Welcome, " << name<<std::endl;
+}
+
+int displayMenu() {
+	int option;
+	std::cout<<std::endl
+		<< "1. Deposit" << std::endl
+		<< "2. Withdraw" << std::endl
+		<< "3. Check Balance" << std::endl
+		<< "4. Exit" << std::endl
+		<< "Choose an operation: ";
+	std::cin >> option;
+	return option;
+}
+
+int displaySecondaryMenu() {
+	int option;
+	std::cout << std::endl
+		<< "1. Back to menu" << std::endl
+		<< "Other Keys to Exit" << std::endl
+		<< "Choose an operation: ";
+	std::cin >> option;
+	return option;
+}
+
+int loopOptions(int option) {
+	switch (option)
+	{
+	case (1):
+	{
+		deposit();
+		int choice = displaySecondaryMenu();
+		if (choice == 1)
+		{
+			int menu =displayMenu();
+			loopOptions(menu);
+		}
+		else
+		{
+			return 0;
+		}
+		break;
+	}
+	case (2):
+	{
+		withdraw();
+		int choice = displaySecondaryMenu();
+		if (choice == 1)
+		{
+			int menu = displayMenu();
+			loopOptions(menu);
+		}
+		else
+		{
+			return 0;
+		}
+		break;
+	}
+	case (3):
+	{
+		checkBalance();
+		int choice = displaySecondaryMenu();
+		if (choice == 1)
+		{
+			int menu = displayMenu();
+			loopOptions(menu);
+		}
+		else
+		{
+			return 0;
+		}
+		break;
+	}
+	case (4):
+	{
+		return 0;
+		break;
+	}
+	default:
+		std::cout << "Wrong choice selected. Please try again " << std::endl;
+		int menu = displayMenu();
+		loopOptions(menu);
+		break;
+	}
+}
+
+void deposit() {
+	int amount;
+	std::cout << "How much would you like to deposit: ";
+	std::cin >> amount;
+	balance += amount;
+	std::cout << "Your new balance is: " << balance << std::endl;
+
+}
+
+void withdraw() {
+	int amount;
+	std::cout << "How much would you like to withdraw: ";
+	std::cin >> amount;
+	if (amount<balance)
+	{
+		balance -= amount;
+		std::cout << "Your new balance is: " << balance << std::endl;
+	}
+	else
+		std::cout << "You attempted to withdraw more than your limit" << std::endl;
+}
+
+
+void checkBalance() {
+	std::cout << "Your balance is: " << balance << std::endl;
+}
